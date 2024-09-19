@@ -52,6 +52,7 @@ export interface ToSignInput {
   index: number;
   publicKey: string;
   sighashTypes?: number[];
+  disableTweakSigner?: boolean;
 }
 
 export enum AddressType {
@@ -82,7 +83,8 @@ export type Keyring<State> = {
   signTypedData(address: Hex, typedData: Record<string, unknown>): string;
   signAllInputsInPsbt(
     psbt: Psbt,
-    accountAddress: string
+    accountAddress: string,
+    disableTweakSigner?: boolean
   ): { signatures: (string | undefined)[] };
   signInputsWithoutFinalizing(
     psbt: Psbt,

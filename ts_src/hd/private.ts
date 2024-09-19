@@ -162,7 +162,11 @@ class HDPrivateKey extends BaseWallet implements Keyring<SerializedHDKey> {
 
     inputs.forEach((input) => {
       account = this.findAccountByPk(input.publicKey);
-      if (this.addressType === AddressType.P2TR) {
+      if (
+        (this.addressType === AddressType.P2TR ||
+          this.addressType === AddressType.M44_P2TR) &&
+        !input.disableTweakSigner
+      ) {
         const signer = tweakSigner(account, {
           network: this.network ?? networks.bellcoin,
         });
@@ -176,11 +180,19 @@ class HDPrivateKey extends BaseWallet implements Keyring<SerializedHDKey> {
     psbt.finalizeAllInputs();
   }
 
-  signAllInputsInPsbt(psbt: Psbt, accountAddress: string) {
+  signAllInputsInPsbt(
+    psbt: Psbt,
+    accountAddress: string,
+    disableTweakSigner?: boolean
+  ) {
     const account = this.findAccount(accountAddress);
 
     psbt.data.inputs.forEach((input, idx) => {
-      if (this.addressType === AddressType.P2TR) {
+      if (
+        (this.addressType === AddressType.P2TR ||
+          this.addressType === AddressType.M44_P2TR) &&
+        !disableTweakSigner
+      ) {
         const signer = tweakSigner(account, {
           network: this.network ?? networks.bellcoin,
         });
@@ -223,7 +235,11 @@ class HDPrivateKey extends BaseWallet implements Keyring<SerializedHDKey> {
 
     inputs.forEach((input) => {
       account = this.findAccountByPk(input.publicKey);
-      if (this.addressType === AddressType.P2TR) {
+      if (
+        (this.addressType === AddressType.P2TR ||
+          this.addressType === AddressType.M44_P2TR) &&
+        !input.disableTweakSigner
+      ) {
         const signer = tweakSigner(account, {
           network: this.network ?? networks.bellcoin,
         });

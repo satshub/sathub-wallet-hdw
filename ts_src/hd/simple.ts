@@ -149,7 +149,11 @@ class HDSimpleKey extends BaseWallet implements Keyring<SerializedSimpleKey> {
 
     inputs.forEach((input) => {
       const account = this.pair!;
-      if (this.addressType === AddressType.P2TR) {
+      if (
+        (this.addressType === AddressType.P2TR ||
+          this.addressType === AddressType.M44_P2TR) &&
+        !input.disableTweakSigner
+      ) {
         const signer = tweakSigner(account, {
           network: this.network ?? networks.bellcoin,
         });
@@ -162,7 +166,11 @@ class HDSimpleKey extends BaseWallet implements Keyring<SerializedSimpleKey> {
     psbt.finalizeAllInputs();
   }
 
-  signAllInputsInPsbt(psbt: Psbt, accountAddress: string) {
+  signAllInputsInPsbt(
+    psbt: Psbt,
+    accountAddress: string,
+    disableTweakSigner?: boolean
+  ) {
     this.initPair();
     if (this.pair === undefined)
       throw new Error("Cannot sign all inputs since pair is undefined");
@@ -172,7 +180,11 @@ class HDSimpleKey extends BaseWallet implements Keyring<SerializedSimpleKey> {
       );
 
     psbt.data.inputs.forEach((input, idx) => {
-      if (this.addressType === AddressType.P2TR) {
+      if (
+        (this.addressType === AddressType.P2TR ||
+          this.addressType === AddressType.M44_P2TR) &&
+        !disableTweakSigner
+      ) {
         const signer = tweakSigner(this.pair!, {
           network: this.network ?? networks.bellcoin,
         });
@@ -214,7 +226,11 @@ class HDSimpleKey extends BaseWallet implements Keyring<SerializedSimpleKey> {
     if (this.pair === undefined)
       throw new Error("Cannot sign inputs since pair is undefined");
     inputs.forEach((input) => {
-      if (this.addressType === AddressType.P2TR) {
+      if (
+        (this.addressType === AddressType.P2TR ||
+          this.addressType === AddressType.M44_P2TR) &&
+        !input.disableTweakSigner
+      ) {
         const signer = tweakSigner(this.pair!, {
           network: this.network ?? networks.bellcoin,
         });
