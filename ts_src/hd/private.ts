@@ -14,13 +14,13 @@ import {
   AddressType,
 } from "./types";
 import { BaseWallet } from "./base";
-import * as tinysecp from "bells-secp256k1";
-import { mnemonicToSeed } from "nintondo-bip39";
-import ECPairFactory, { ECPairInterface } from "belpair";
-import { Network, networks, Psbt, Signer } from "belcoinjs-lib";
+import * as tinysecp from "tiny-secp256k1";
+import { mnemonicToSeed } from "bip39";
+import ECPairFactory, { ECPairInterface } from "ecpair";
+import { Network, networks, Psbt, Signer } from "bitcoinjs-lib";
 import HDKey from "browser-hdkey";
 import { sha256 } from "@noble/hashes/sha256";
-import { crypto as belCrypto } from "belcoinjs-lib";
+import { crypto as belCrypto } from "bitcoinjs-lib";
 import { toXOnly } from "../utils/util";
 
 const ECPair = ECPairFactory(tinysecp);
@@ -168,7 +168,7 @@ class HDPrivateKey extends BaseWallet implements Keyring<SerializedHDKey> {
         !input.disableTweakSigner
       ) {
         const signer = tweakSigner(account, {
-          network: this.network ?? networks.bellcoin,
+          network: this.network ?? networks.bitcoin,
         });
         psbt.signInput(input.index, signer, input.sighashTypes);
       } else {
@@ -194,7 +194,7 @@ class HDPrivateKey extends BaseWallet implements Keyring<SerializedHDKey> {
         !disableTweakSigner
       ) {
         const signer = tweakSigner(account, {
-          network: this.network ?? networks.bellcoin,
+          network: this.network ?? networks.bitcoin,
         });
         psbt.signInput(
           idx,
@@ -241,7 +241,7 @@ class HDPrivateKey extends BaseWallet implements Keyring<SerializedHDKey> {
         !input.disableTweakSigner
       ) {
         const signer = tweakSigner(account, {
-          network: this.network ?? networks.bellcoin,
+          network: this.network ?? networks.bitcoin,
         });
         psbt.signInput(input.index, signer, input.sighashTypes);
       } else {

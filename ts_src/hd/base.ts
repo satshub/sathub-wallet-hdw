@@ -1,4 +1,4 @@
-import { Network, networks, payments } from "belcoinjs-lib";
+import { Network, networks, payments } from "bitcoinjs-lib";
 import { AddressType } from "./types";
 import { toXOnly } from "../utils/util";
 
@@ -17,24 +17,24 @@ export class BaseWallet {
       case AddressType.P2WPKH:
         return payments.p2wpkh({
           pubkey: Buffer.from(publicKey),
-          network: this.network ?? networks.bellcoin,
+          network: this.network ?? networks.bitcoin,
         }).address;
       case AddressType.P2SH_P2WPKH:
         return payments.p2sh({
           redeem: payments.p2wpkh({
             pubkey: Buffer.from(publicKey),
-            network: this.network ?? networks.bellcoin,
+            network: this.network ?? networks.bitcoin,
           }),
         }).address;
       case AddressType.P2PKH as any:
         return payments.p2pkh({
           pubkey: Buffer.from(publicKey),
-          network: this.network ?? networks.bellcoin,
+          network: this.network ?? networks.bitcoin,
         }).address;
       case AddressType.P2TR:
         return payments.p2tr({
           internalPubkey: toXOnly(Buffer.from(publicKey)),
-          network: this.network ?? networks.bellcoin,
+          network: this.network ?? networks.bitcoin,
         }).address;
       default:
         throw new Error("Invalid AddressType");
