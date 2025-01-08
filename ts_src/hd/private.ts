@@ -14,7 +14,7 @@ import {
   AddressType,
 } from "./types";
 import { BaseWallet } from "./base";
-import * as tinysecp from "tiny-secp256k1";
+import * as tinysecp from "bells-secp256k1";
 import { mnemonicToSeed } from "bip39";
 import ECPairFactory, { ECPairInterface } from "sathub-wallet-ecpair";
 import { Network, networks, Psbt, Signer } from "bitcoinjs-lib";

@@ -1,6 +1,6 @@
 {
   "name": "sathub-wallet-hdw",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "Client-side Bitcoin JavaScript library",
   "main": "./src/index.js",
   "types": "./src/index.d.ts",
