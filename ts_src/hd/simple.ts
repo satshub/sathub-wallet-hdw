@@ -8,7 +8,7 @@ import { ZERO_KEY, ZERO_PRIVKEY } from "./common";
 import { bytesToHex, hexToBytes } from "@noble/hashes/utils";
 import { BaseWallet } from "./base";
 import * as tinysecp from "tiny-secp256k1";
-import ECPairFactory, { ECPairInterface } from "ecpair";
+import ECPairFactory, { ECPairInterface } from "sathub-wallet-ecpair";
 import { Network, networks, Psbt, Signer } from "bitcoinjs-lib";
 import { sha256 } from "@noble/hashes/sha256";
 import { crypto as belCrypto } from "bitcoinjs-lib";
